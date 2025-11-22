@@ -34,7 +34,7 @@ services:
       - NAVIDROME_MUSIC_FOLDER=/music
     volumes:
       # Volume para dados do Navidrome
-      - /DATA/AppData/navidrome-rclone:/data
+      - /DATA/AppData/navidrome-rclone-mount:/data
       # Volume para configuração do Rclone (MONTE SEU rclone.conf AQUI)
       - /home/lucas/.config/rclone:/config/rclone
       - /home/lucas/.cache/rclone:/cache/rclone
