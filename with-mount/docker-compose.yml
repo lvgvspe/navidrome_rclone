@@ -45,3 +45,4 @@ cap_add:
   - SYS_ADMIN
 security_opt:
   - apparmor:unconfined
+privileged: true  # Adicione esta linha se as outras opções não funcionarem
