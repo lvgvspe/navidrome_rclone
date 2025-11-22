@@ -37,3 +37,10 @@ services:
       - /DATA/AppData/navidrome-rclone:/data
       # Volume para configuração do Rclone (MONTE SEU rclone.conf AQUI)
       - /home/lucas/.config/rclone:/config/rclone
+      
+devices:
+  - /dev/fuse
+cap_add:
+  - SYS_ADMIN
+security_opt:
+  - apparmor:unconfined
