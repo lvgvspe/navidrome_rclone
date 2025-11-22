@@ -11,16 +11,27 @@ cur.execute("SELECT id, name FROM playlist")
 playlists = cur.fetchall()
 
 for playlist in playlists:
-    if playlist[1] not in ["2", "3", "4", "5"]:
+    if playlist[1] == "0":
+        cur.execute("SELECT id FROM media_file")
+        all_songs = cur.fetchall()
+        if not all_songs:
+            continue
+        cur.execute(
+            "SELECT item_id FROM annotation WHERE item_type = 'media_file' AND rating NOT LIKE '0'",
+        )
+        blacklist = cur.fetchall()
+        songs = [song for song in all_songs if song not in blacklist]
+    elif playlist[1] not in ["2", "3", "4", "5"]:
         continue
-    cur.execute(
-        "SELECT item_id FROM annotation WHERE item_type = 'media_file' AND rating = ?",
-        (playlist[1],),
-    )
-    songs = cur.fetchall()
+    else:
+        cur.execute(
+            "SELECT item_id FROM annotation WHERE item_type = 'media_file' AND rating = ?",
+            (playlist[1],),
+        )
+        songs = cur.fetchall()
     if not songs:
         continue
-    print(f"Playlist: {playlist} ({len(songs)} songs)")
+    print(f"Playlist: {playlist[1]} ({len(songs)} songs)")
     for i, song in enumerate(songs, start=1):
         cur.execute(
             "REPLACE INTO playlist_tracks (id, playlist_id, media_file_id) VALUES (?, ?, ?)",
