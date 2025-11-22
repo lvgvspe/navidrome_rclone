@@ -22,8 +22,11 @@ RUN curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip && \
     rclone version
 
 # Criar diretórios necessários
-RUN mkdir -p /music /cache/rclone && \
-    chmod 755 /music /cache/rclone
+RUN mkdir -p /music /cache/rclone /data && \
+    chmod 755 /music /cache/rclone /data
+
+# Copiar criador de playlists
+COPY mklist.py /data
 
 # Copiar script de inicialização
 COPY entrypoint.sh /entrypoint.sh
