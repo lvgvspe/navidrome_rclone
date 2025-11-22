@@ -40,7 +40,7 @@ wait_for_rclone_config() {
 if ! wait_for_rclone_config; then
     echo "🚨 Iniciando sem Rclone - apenas Navidrome"
     echo "Iniciando Navidrome com pasta local: $MUSIC_FOLDER"
-    exec navidrome --musicfolder "$MUSIC_FOLDER" --datafolder /data
+    exec /app/navidrome --musicfolder "$MUSIC_FOLDER" --datafolder /data
 fi
 
 # O restante do script permanece igual...
@@ -107,7 +107,7 @@ if [ "$SYNC_INTERVAL" != "0" ]; then
     echo "🔄 Sincronização contínua ativada (intervalo: ${SYNC_INTERVAL}s)"
     
     # Iniciar Navidrome em background
-    navidrome --musicfolder "$MUSIC_FOLDER" --datafolder /data &
+    /app/navidrome --musicfolder "$MUSIC_FOLDER" --datafolder /data &
     
     # Manter sync periódico em foreground
     while true; do
@@ -117,5 +117,5 @@ if [ "$SYNC_INTERVAL" != "0" ]; then
     done
 else
     echo "🔒 Modo sincronização única"
-    exec navidrome --musicfolder "$MUSIC_FOLDER" --datafolder /data
+    exec /app/navidrome --musicfolder "$MUSIC_FOLDER" --datafolder /data
 fi
