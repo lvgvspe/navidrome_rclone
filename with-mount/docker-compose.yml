@@ -1,7 +1,7 @@
 services:
   navidrome-rclone:
     # build: .
-    image: registry.lvgvspe.com.br/navidrome-rclone:latest
+    image: registry.lvgvspe.com.br/navidrome-rclone-mount:latest
     container_name: navidrome-rclone
     restart: unless-stopped
     ports:
