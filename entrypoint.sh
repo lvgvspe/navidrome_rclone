@@ -102,12 +102,25 @@ sync_remotes
 echo "Sincronização inicial concluída!"
 echo "Iniciando Navidrome com pasta: $MUSIC_FOLDER"
 
+sync_playlists() {
+    while true; do
+        sleep "${MKLIST_INTERVAL:-10}"
+        cd /data
+        python3 mklist.py
+    done
+}
+
 # Iniciar Navidrome em background e sync periódico em foreground
 if [ "$SYNC_INTERVAL" != "0" ]; then
     echo "🔄 Sincronização contínua ativada (intervalo: ${SYNC_INTERVAL}s)"
     
     # Iniciar Navidrome em background
     /app/navidrome --musicfolder "$MUSIC_FOLDER" --datafolder /data &
+
+    # Iniciar sync playlists em background
+    if [ "$MKLIST_RUN" == "true" ]; then
+        sync_playlists &
+    fi  
     
     # Manter sync periódico em foreground
     while true; do

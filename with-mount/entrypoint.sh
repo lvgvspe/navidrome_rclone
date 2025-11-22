@@ -72,6 +72,25 @@ for montagem in "$@"; do
     fi
 done
 
+sync_playlists() {
+    while true; do
+        sleep "${MKLIST_INTERVAL:-10}"
+        cd /data
+        python3 mklist.py
+    done
+}
+
 echo "Todas as montagens realizadas com sucesso!"
-echo "Iniciando Navidrome com pasta: $MUSIC_FOLDER"
-exec /app/navidrome --musicfolder "$MUSIC_FOLDER" --datafolder /data
+if [ "$MKLIST_RUN" ]; then
+    echo "Executando Navidrome com playlists automáticas na pasta: $MUSIC_FOLDER"
+    
+    # Iniciar Navidrome em background
+    /app/navidrome --musicfolder "$MUSIC_FOLDER" --datafolder /data &
+    
+    # Manter sync periódico em foreground
+    sync_playlists
+    
+else
+    echo "Iniciando Navidrome com pasta: $MUSIC_FOLDER"
+    exec /app/navidrome --musicfolder "$MUSIC_FOLDER" --datafolder /data
+fi

@@ -32,6 +32,7 @@ services:
       
       # Opcional: Especificar qual pasta usar para o Navidrome
       - NAVIDROME_MUSIC_FOLDER=/music
+      - MKLIST_RUN=true
     volumes:
       # Volume para dados do Navidrome
       - /DATA/AppData/navidrome-rclone-mount:/data
