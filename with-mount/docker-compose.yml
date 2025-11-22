@@ -1,0 +1,39 @@
+services:
+  navidrome-rclone:
+    # build: .
+    image: registry.lvgvspe.com.br/navidrome-rclone:latest
+    container_name: navidrome-rclone
+    restart: unless-stopped
+    ports:
+      - "4533:4533"
+    environment:
+      # Configurações do Navidrome
+      - ND_SCANNER_SCHEDULE=@every 12h
+      - ND_LOGLEVEL=info
+      - ND_SESSIONTIMEOUT=24h
+      
+      # Configuração de múltiplas montagens Rclone
+      # Formato: REMOTE_NAME:REMOTE_PATH:MOUNT_POINT
+
+      # Exemplo 1: Múltiplos Serviços de Nuvem
+      # - RCLONE_MOUNTS=google-drive:/Music:/music,dropbox:/Podcasts:/mnt/podcasts,amazon-cloud-drive:/AudioBooks:/mnt/audiobooks
+      # Exemplo 2: Diferentes Pastas do Mesmo Remote
+      # - RCLONE_MOUNTS=google-drive:/Musica_Brasileira:/music/brasil,google-drive:/Musica_Internacional:/music/internacional,google-drive:/Podcasts:/music/podcasts
+      # Exemplo 3: Misturando Nuvens e FTP
+      # - RCLONE_MOUNTS=google-drive:/Music:/music,ftp-server:/music:/mnt/ftp,webdav-cloud:/audio:/mnt/webdav
+
+      - RCLONE_MOUNTS=zbminio:/82vy/Músicas:/music
+      
+      # Configurações gerais do Rclone
+      - RCLONE_CONFIG=/config/rclone/rclone.conf
+      - RCLONE_CACHE_DIR=/cache/rclone
+      - RCLONE_MAX_CACHE_AGE=720h
+      - RCLONE_MAX_CACHE_SIZE=20G
+      
+      # Opcional: Especificar qual pasta usar para o Navidrome
+      - NAVIDROME_MUSIC_FOLDER=/music
+    volumes:
+      # Volume para dados do Navidrome
+      - /DATA/AppData/navidrome-rclone:/data
+      # Volume para configuração do Rclone (MONTE SEU rclone.conf AQUI)
+      - /home/lucas/.config/rclone:/config/rclone
