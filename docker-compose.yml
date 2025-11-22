@@ -33,6 +33,10 @@ services:
       - SYNC_INTERVAL=3600
       - CONFIG_RETRIES=30
       - CONFIG_DELAY=10
+
+      # Opcional: Criar playlists baseadas em rating
+      - MKLIST_RUN=true
+      - MKLIST_INTERVAL=10
     volumes:
       # Volume para dados do Navidrome
       - /DATA/AppData/navidrome-rclone:/data
