@@ -22,7 +22,7 @@ services:
       # Exemplo 3: Misturando Nuvens e FTP
       # - RCLONE_MOUNTS=google-drive:/Music:/music,ftp-server:/music:/mnt/ftp,webdav-cloud:/audio:/mnt/webdav
 
-      - RCLONE_MOUNTS=-zbminio:/82vy/Músicas:/music
+      - RCLONE_MOUNTS=zbminio:/82vy/Músicas:/music
       
       # Configurações gerais do Rclone
       - RCLONE_CONFIG=/config/rclone/rclone.conf
