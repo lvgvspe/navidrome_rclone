@@ -90,6 +90,7 @@ sync_remotes() {
             --config "$RCLONE_CONFIG" \
             --progress \
             --verbose \
+            --delete-excluded \
             "$REMOTE_NAME:$REMOTE_PATH" "$LOCAL_FOLDER"
         
         echo "✅ Sincronização $LOCAL_FOLDER bem sucedida!"
